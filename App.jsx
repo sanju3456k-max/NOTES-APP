@@ -1,2030 +1,1334 @@
-/* =========================================================
-   MATERIAL 3 DESIGN TOKENS & RESET
-   ========================================================= */
-:root {
-  --bg-app: #f4f6fa;
-  --bg-surface: #ffffff;
-  --bg-surface-alt: #f8fafc;
-  --bg-pill: #eef2f8;
-  --primary: #1a56db;
-  --primary-hover: #1e40af;
-  --primary-light: #e0eaff;
-  --primary-soft: #f0f5ff;
-  --text-main: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --border-color: #e2e8f0;
-  --border-subtle: #edf2f7;
-  --success-bg: #dcfce7;
-  --success-text: #15803d;
-  --danger: #dc2626;
-  --danger-bg: #fef2f2;
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.14);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
-  --radius-pill: 9999px;
-}
-
-body.dark-theme {
-  --bg-app: #0b0f19;
-  --bg-surface: #111827;
-  --bg-surface-alt: #1e293b;
-  --bg-pill: #1f2937;
-  --primary: #3b82f6;
-  --primary-light: #1e3a8a;
-  --primary-soft: #172554;
-  --text-main: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
-  --border-color: #1f2937;
-  --border-subtle: #334155;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--bg-app);
-  color: var(--text-main);
-  height: 100dvh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-#root {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 0;
-}
-
-#root > div {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 0;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.text-primary { color: var(--primary); }
-.text-muted { color: var(--text-muted); }
-.text-danger { color: var(--danger); }
-
-.icon-xs { width: 15px; height: 15px; }
-.icon-sm { width: 18px; height: 18px; }
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  background: none;
-  color: inherit;
-}
+import { useEffect } from 'react';
 
 /* =========================================================
-   VIEW MANAGEMENT
+   NOTES STUDIO PRO — DIRECT DOM PREVIEW, IMAGE & PRINT ENGINE
    ========================================================= */
-.view {
-  display: none;
-  flex: 1 1 0;
-  flex-direction: column;
-  height: 100%;
-  min-height: 0;
-  width: 100%;
-}
 
-.view.active {
-  display: flex;
-}
+const STORAGE_KEY = 'notes_studio_pro_v2';
+
+const DEFAULT_FT1_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cartesian Coordinates & Reference Framework</title>
+  <style>
+    :root {
+      --primary-color: #1e3a8a;
+      --secondary-color: #0284c7;
+      --border-color: #e2e8f0;
+    }
+    .module-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 3px solid var(--primary-color);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      gap: 12px;
+    }
+    .module-header h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0;
+      line-height: 1.25;
+    }
+    .badge-box {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 700;
+      font-size: 0.72rem;
+      padding: 6px 10px;
+      border-radius: 8px;
+      letter-spacing: 0.05em;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .preview-canvas h2 {
+      font-size: 1.18rem;
+      color: #0f172a;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 6px;
+      margin-top: 22px;
+      margin-bottom: 12px;
+    }
+    .preview-canvas h3 {
+      font-size: 1.02rem;
+      color: var(--primary-color);
+      margin-top: 16px;
+      margin-bottom: 6px;
+    }
+    .graph-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 0;
+      text-align: center;
+    }
+    .graph-caption {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 10px;
+    }
+    .def-box {
+      background: #f8fafc;
+      border-left: 4px solid #0284c7;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      font-size: 0.94rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="module-header">
+    <h1>Module 1: Cartesian Coordinates & Reference Framework</h1>
+    <div class="badge-box">FOU<br>NDA<br>TION<br>S</div>
+  </div>
+
+  <h2>1. Fundamental Definitions</h2>
+
+  <div class="graph-card">
+    <svg viewBox="0 0 360 250" style="max-width: 100%; height: auto; background: #fcfdff; border-radius: 8px;">
+      <defs>
+        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+          <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="360" height="250" fill="url(#grid)" />
+      <line x1="40" y1="190" x2="330" y2="190" stroke="#334155" stroke-width="2" />
+      <line x1="110" y1="20" x2="110" y2="235" stroke="#334155" stroke-width="2" />
+      <text x="335" y="194" font-size="12" font-weight="bold" fill="#1e293b">X</text>
+      <text x="20" y="194" font-size="12" font-weight="bold" fill="#1e293b">X'</text>
+      <text x="106" y="15" font-size="12" font-weight="bold" fill="#1e293b">Y</text>
+      <text x="105" y="247" font-size="12" font-weight="bold" fill="#1e293b">Y'</text>
+      <line x1="110" y1="90" x2="230" y2="90" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4,4" />
+      <line x1="230" y1="90" x2="230" y2="190" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,4" />
+      <circle cx="230" cy="90" r="4.5" fill="#0284c7" />
+      <text x="238" y="85" font-size="13" font-weight="bold" fill="#0284c7">P(x, y)</text>
+      <circle cx="110" cy="190" r="3.5" fill="#f59e0b" />
+      <text x="92" y="206" font-size="11" font-weight="bold" fill="#b45309">O(0,0)</text>
+      <text x="150" y="205" font-size="10" fill="#475569">Abscissa (|x|)</text>
+      <text x="68" y="145" font-size="10" fill="#475569">Ordinate (|y|)</text>
+    </svg>
+    <div class="graph-caption">
+      Figure: Cartesian Reference Frame showing point $P(x, y)$, its abscissa from the $Y$-axis, and ordinate from the $X$-axis.
+    </div>
+  </div>
+
+  <div class="def-box">
+    <strong>Axes of Reference:</strong> The mutually perpendicular horizontal axis ($X$-axis, $X'OX') and vertical axis ($Y$-axis, $Y'OY') meeting at the origin $O(0, 0)$.
+  </div>
+
+  <div class="def-box">
+    <strong>Abscissa ($x$-coordinate):</strong> Perpendicular distance of a point from the $Y$-axis.
+  </div>
+
+  <div class="def-box">
+    <strong>Ordinate ($y$-coordinate):</strong> Perpendicular distance of a point from the $X$-axis.
+  </div>
+
+  <h2>2. Coordinate Axis Properties</h2>
+  <h3>1. General Distance Derivation</h3>
+  <p>For any two points $A(x_1, y_1)$ and $B(x_2, y_2)$ in the Cartesian plane, the Euclidean distance $d$ is given by:</p>
+  <p>$$d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$</p>
+
+  <h3>2. The "Pyare Numbers" (Pythagorean Triplets)</h3>
+  <p>Common right-angled triangle triplets for rapid coordinate distance calculation: $(3, 4, 5)$, $(5, 12, 13)$, $(7, 24, 25)$, $(8, 15, 17)$.</p>
+
+  <h1>Module 2: Section Formula & Ratio Shortcuts</h1>
+  <h3>1. Internal Division</h3>
+  <p>Coordinates of point $P$ dividing segment $AB$ internally in ratio $m_1 : m_2$:</p>
+  <p>$$P(x, y) = \\left( \\frac{m_1 x_2 + m_2 x_1}{m_1 + m_2}, \\frac{m_1 y_2 + m_2 y_1}{m_1 + m_2} \\right)$$</p>
+</body>
+</html>`;
+
+let appState = {
+  projects: [],
+  activeProjectId: null,
+  activeFileId: null,
+  viewMode: 'preview',
+  zoomLevel: 100,
+  splitRatio: 50,
+  margins: { gutter: 5, side: 5, vert: 8, fontSize: 15 }
+};
+
+let historyStack = {};
+let selectedImageWidget = null;
+let previewRenderTimer = null;
+let previewEditMode = false;
 
 /* =========================================================
-   HOME VIEW: HEADER & SEGMENTED SWITCHER
+   1. INITIALIZATION
    ========================================================= */
-.app-header,
-.studio-header {
-  height: 58px;
-  background: var(--bg-surface);
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 14px;
-  flex-shrink: 0;
+function initializeNotesStudio() {
+  loadStateFromStorage();
+  renderProjectsList();
+  setupCodeEditorListeners();
+  if (window.lucide) lucide.createIcons();
 }
 
-.header-left,
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+function loadStateFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && Array.isArray(parsed.projects) && parsed.projects.length > 0) {
+        appState = { ...appState, ...parsed };
+        return;
+      }
+    }
+  } catch (e) {}
+
+  appState.projects = [
+    {
+      id: 'proj-1',
+      name: 'Straight line',
+      updatedAt: '20/10/2026',
+      files: [
+        { id: 'f-1', name: 'FT1', content: DEFAULT_FT1_HTML, versions: [] },
+        { id: 'f-2', name: 'Note 2', content: '<h1>Note 2: Slope of a Line</h1><p>The gradient $m = \\tan\\theta = \\frac{y_2 - y_1}{x_2 - x_1}$.</p>', versions: [] },
+        { id: 'f-3', name: 'Note 3', content: '<h1>Note 3: Various Forms of Line</h1><p>Point-slope, Two-point, Slope-intercept, and Normal form.</p>', versions: [] },
+        { id: 'f-4', name: 'Note 4', content: '<h1>Note 4: Pair of Straight Lines</h1><p>Homogeneous equation $ax^2 + 2hxy + by^2 = 0$.</p>', versions: [] }
+      ]
+    },
+    {
+      id: 'proj-2',
+      name: 'New Chapter',
+      updatedAt: '18/10/2026',
+      files: [{ id: 'f-201', name: 'Chapter Intro', content: '<h1>New Chapter Notes</h1><p>Write your HTML + LaTeX study notes here.</p>', versions: [] }]
+    },
+    {
+      id: 'proj-3',
+      name: 'New Chapter 2',
+      updatedAt: '18/10/2026',
+      files: [{ id: 'f-301', name: 'Formula Sheet', content: '<h1>Formula Sheet</h1><p>Add key derivations and diagrams.</p>', versions: [] }]
+    }
+  ];
+  saveStateToStorage();
 }
 
-.app-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+function saveStateToStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+  } catch (e) {}
 }
 
-.icon-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-main);
-  transition: background 0.15s;
-}
-.icon-btn:hover { background: var(--bg-pill); }
-
-.studio-menu-btn {
-  min-height: 36px;
-  padding: 0 10px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-pill);
-  background: var(--bg-surface);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-.studio-menu-btn:hover { background: var(--bg-pill); color: var(--text-main); }
-
-.icon-btn-surface {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--primary-soft);
-  border: 1px solid var(--primary-light);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cloud-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: var(--radius-pill);
-  background: var(--primary-soft);
-  border: 1px solid var(--primary-light);
-  color: var(--primary);
-  font-size: 0.76rem;
-  font-weight: 600;
-}
-
-/* Mode Switcher */
-.mode-switcher-wrapper {
-  background: var(--bg-surface);
-  padding: 10px 16px 14px;
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.segmented-pill {
-  background: var(--bg-pill);
-  padding: 4px;
-  border-radius: var(--radius-pill);
-  display: inline-flex;
-  width: 100%;
-  max-width: 340px;
-  border: 1px solid var(--border-color);
-}
-
-.pill-btn {
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: var(--radius-pill);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  transition: all 0.2s ease;
-}
-
-.pill-btn.active {
-  background: var(--primary);
-  color: #ffffff;
-  box-shadow: 0 2px 6px rgba(26, 86, 219, 0.28);
-}
-
-/* Home Main Content */
-.home-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px 24px 32px;
-  max-width: 940px;
-  width: 100%;
-  margin: 0 auto;
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 transparent;
-}
-
-.home-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.home-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.home-content::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border: 2px solid transparent;
-  border-radius: 999px;
-  background-clip: padding-box;
-}
-
-.home-content::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
-}
-
-.quick-actions-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 30px;
-}
-
-.section-header {
-  gap: 16px;
-}
-
-.section-subtitle {
-  line-height: 1.45;
-}
-
-@media (max-width: 560px) {
-  .home-content {
-    padding: 16px 14px 24px;
-  }
-
-  .section-header {
-    align-items: flex-start;
-  }
-
-  .section-subtitle {
-    max-width: 260px;
-  }
-
-  .project-card {
-    padding: 14px;
-  }
-
-  .project-card-main {
-    align-items: flex-start;
-  }
-
-  .project-inline-actions {
-    flex-shrink: 0;
-  }
-
-  .project-meta {
-    flex-wrap: wrap;
-    gap: 6px 12px;
-  }
-}
-
-.btn-primary-pill {
-  background: var(--primary);
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: var(--radius-pill);
-  font-size: 0.86rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 2px 8px rgba(26, 86, 219, 0.25);
-}
-
-.btn-outline-pill {
-  background: var(--bg-surface);
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
-  padding: 10px 18px;
-  border-radius: var(--radius-pill);
-  font-size: 0.86rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.icon-btn-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-secondary);
-}
-
-.section-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-
-.section-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-}
-
-.section-subtitle {
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  margin-top: 2px;
-}
-
-.count-badge {
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-/* Project Cards */
-.projects-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding-bottom: 40px;
-}
-
-.project-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 16px 18px;
-  box-shadow: var(--shadow-sm);
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s;
-}
-
-.project-card:hover {
-  border-color: var(--primary);
-  box-shadow: var(--shadow-md);
-}
-
-.project-card-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.project-card-main {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-
-.project-title-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.project-name {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.project-inline-actions {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.proj-action-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-}
-.proj-action-icon:hover {
-  background: var(--bg-pill);
-  color: var(--text-main);
-}
-
-.project-card-footer {
-  border-top: 1px solid var(--border-subtle);
-  padding-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-}
-
-.project-meta {
-  display: flex;
-  gap: 14px;
-}
-
-.chevron-circle {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--primary-soft);
-  color: var(--primary);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Revision Hub Empty State */
-.revision-search-card {
-  background: var(--bg-surface);
-  border-radius: var(--radius-lg);
-  padding: 14px;
-  border: 1px solid var(--border-color);
-  margin-bottom: 14px;
-}
-
-.search-input-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--bg-surface-alt);
-  border: 1px solid var(--border-color);
-  padding: 10px 14px;
-  border-radius: var(--radius-pill);
-  margin-bottom: 12px;
-}
-
-.search-input-box input {
-  border: none;
-  background: transparent;
-  outline: none;
-  width: 100%;
-  font-size: 0.88rem;
-  color: var(--text-main);
-}
-
-.revision-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.dropdown-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--border-color);
-  font-size: 0.82rem;
-  font-weight: 600;
-}
-
-.revision-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.fab-mini {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.category-chips {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 12px;
-}
-
-.chip {
-  padding: 7px 14px;
-  border-radius: var(--radius-pill);
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.chip.active {
-  background: var(--primary-light);
-  color: var(--primary);
-  border-color: var(--primary);
-}
-
-.empty-state-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 42px 20px;
-  text-align: center;
-  margin-top: 8px;
-}
-
-.empty-icon-circle {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  background: var(--bg-pill);
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 14px;
+function formatTodayDate() {
+  const d = new Date();
+  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
 }
 
 /* =========================================================
-   STUDIO WORKSPACE: TOOLBAR & TABS
+   2. HOME SCREEN: PROJECTS & CHAPTERS
    ========================================================= */
-.studio-toolbar {
-  height: 50px;
-  background: var(--bg-surface);
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 12px;
-  flex-shrink: 0;
+function renderProjectsList() {
+  const listEl = document.getElementById('projects-list');
+  const countEl = document.getElementById('project-count-label');
+  if (!listEl) return;
+
+  countEl.textContent = `${appState.projects.length} Project${appState.projects.length === 1 ? '' : 's'}`;
+
+  listEl.innerHTML = appState.projects.map(proj => `
+    <div class="project-card" onclick="openProjectInStudio('${proj.id}')">
+      <div class="project-card-label">CHAPTER</div>
+      <div class="project-card-main">
+        <div class="project-title-group">
+          <i data-lucide="folder" class="icon-sm text-primary"></i>
+          <span class="project-name">${escapeHtml(proj.name)}</span>
+          <div class="project-inline-actions" onclick="event.stopPropagation()">
+            <button class="proj-action-icon" onclick="renameProjectPrompt('${proj.id}')"><i data-lucide="pencil" class="icon-xs"></i></button>
+            <button class="proj-action-icon" onclick="downloadProjectZipById('${proj.id}')"><i data-lucide="download" class="icon-xs"></i></button>
+            <button class="proj-action-icon" onclick="deleteProjectById('${proj.id}')"><i data-lucide="trash-2" class="icon-xs"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="project-card-footer">
+        <div class="project-meta">
+          <span>${proj.files.length} file${proj.files.length === 1 ? '' : 's'}</span>
+          <span>Updated ${proj.updatedAt}</span>
+        </div>
+        <div class="chevron-circle"><i data-lucide="chevron-right" class="icon-xs"></i></div>
+      </div>
+    </div>
+  `).join('');
+
+  if (window.lucide) lucide.createIcons();
 }
 
-.toolbar-left,
-.toolbar-right {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+function createNewProject() {
+  const name = prompt('Enter new Project / Chapter name:', `New Chapter ${appState.projects.length + 1}`);
+  if (!name || !name.trim()) return;
+  appState.projects.unshift({
+    id: 'proj-' + Date.now(),
+    name: name.trim(),
+    updatedAt: formatTodayDate(),
+    files: [{
+      id: 'file-' + Date.now(),
+      name: 'Note 1',
+      content: `<h1>${escapeHtml(name.trim())}</h1>\n<h2>1. Core Concepts</h2>\n<p>Start writing, or use <strong>Edit preview</strong> to add and arrange diagrams.</p>`,
+      versions: []
+    }]
+  });
+  saveStateToStorage();
+  renderProjectsList();
 }
 
-.tool-btn {
-  width: 36px;
-  height: 34px;
-  border-radius: var(--radius-pill);
-  background: var(--bg-pill);
-  color: var(--text-secondary);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s;
-}
-.tool-btn:hover,
-.tool-btn.active {
-  background: var(--primary-light);
-  color: var(--primary);
-}
-
-.tool-btn-accent {
-  background: var(--primary-soft);
-  color: var(--primary);
-  border: 1px solid var(--primary-light);
-}
-
-.view-mode-pills {
-  display: inline-flex;
-  background: var(--bg-pill);
-  padding: 3px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--border-color);
-}
-
-.mode-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 12px;
-  border-radius: var(--radius-pill);
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.mode-pill.active {
-  background: var(--primary);
-  color: #ffffff;
-}
-
-.desktop-only {
-  display: none;
-}
-@media (min-width: 900px) {
-  .desktop-only {
-    display: inline-flex;
+function renameProjectPrompt(projId) {
+  const proj = appState.projects.find(p => p.id === projId);
+  if (!proj) return;
+  const newName = prompt('Rename chapter:', proj.name);
+  if (newName && newName.trim()) {
+    proj.name = newName.trim();
+    proj.updatedAt = formatTodayDate();
+    saveStateToStorage();
+    renderProjectsList();
   }
 }
 
-/* Search Bar */
-.studio-search-bar {
-  background: var(--bg-surface-alt);
-  border-bottom: 1px solid var(--border-color);
-  padding: 6px 12px;
-}
-.search-inner {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 5px 10px;
-}
-.search-inner input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 0.84rem;
-  color: var(--text-main);
-}
-.search-count {
-  font-size: 0.75rem;
-  color: var(--text-muted);
+function deleteProjectById(projId) {
+  const proj = appState.projects.find(p => p.id === projId);
+  if (!proj || !confirm(`Delete chapter "${proj.name}"?`)) return;
+  appState.projects = appState.projects.filter(p => p.id !== projId);
+  saveStateToStorage();
+  renderProjectsList();
 }
 
-/* File Tabs Bar */
-.file-tabs-bar {
-  height: 44px;
-  background: var(--bg-surface);
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px 0 12px;
-  flex-shrink: 0;
-}
-
-.file-tabs-scroll {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  flex: 1;
-  padding-right: 8px;
-}
-.file-tabs-scroll::-webkit-scrollbar { display: none; }
-
-.file-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: 10px;
-  background: var(--bg-surface-alt);
-  border: 1px solid var(--border-color);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.file-tab.active {
-  background: var(--primary-soft);
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-.tab-icon-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  opacity: 0.7;
-}
-.tab-icon-btn:hover {
-  opacity: 1;
-  background: rgba(0,0,0,0.07);
-}
-
-.file-tabs-actions {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding-left: 6px;
-  border-left: 1px solid var(--border-color);
-}
-
-.tab-action-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-secondary);
-}
-.tab-action-btn:hover { background: var(--bg-pill); }
-
-/* =========================================================
-   WORKSPACE BODY (EDITOR, PREVIEW & SPLIT SCREEN)
-   ========================================================= */
-.workspace-body {
-  flex: 1 1 0;
-  min-height: 0;
-  min-width: 0;
-  display: flex;
-  overflow: hidden;
-  position: relative;
-  transition: margin-left 0.25s ease, width 0.25s ease;
-}
-
-.workspace-pane {
-  height: 100%;
-  min-height: 0;
-  min-width: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Mode toggling */
-.workspace-body.mode-preview .editor-pane { display: none; }
-.workspace-body.mode-preview .preview-pane { display: flex; }
-
-.workspace-body.mode-editor .editor-pane { display: flex; }
-.workspace-body.mode-editor .preview-pane { display: none; }
-
-.workspace-body.mode-split .editor-pane,
-.workspace-body.mode-split .preview-pane {
-  display: flex;
-  min-width: 0;
-}
-.workspace-body.mode-split .editor-pane {
-  flex: 0 0 calc(var(--split-ratio, 50%) - 3px);
-  width: auto;
-  border-right: none;
-}
-.workspace-body.mode-split .preview-pane {
-  flex: 1 1 0;
-  width: auto;
-}
-
-.split-divider {
-  display: none;
-}
-.workspace-body.mode-split .split-divider {
-  display: block;
-  flex: 0 0 6px;
-  position: relative;
-  z-index: 2;
-  background: var(--border-color);
-  cursor: col-resize;
-  touch-action: none;
-}
-.workspace-body.mode-split .split-divider::after {
-  content: "";
-  position: absolute;
-  inset: 0 -5px;
-}
-.workspace-body.mode-split .split-divider:hover,
-.workspace-body.mode-split .split-divider:focus-visible {
-  background: var(--primary);
-  outline: none;
-}
-
-/* Code Editor */
-.code-editor-wrapper {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-  background: var(--bg-surface);
-}
-
-.line-numbers {
-  width: 44px;
-  padding: 14px 6px;
-  background: var(--bg-surface-alt);
-  border-right: 1px solid var(--border-subtle);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  line-height: 1.55;
-  color: var(--text-muted);
-  text-align: right;
-  user-select: none;
-  overflow: hidden;
-}
-
-.code-textarea {
-  flex: 1;
-  padding: 14px;
-  border: none;
-  outline: none;
-  resize: none;
-  background: var(--bg-surface);
-  color: var(--text-main);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
-  line-height: 1.55;
-  overflow-y: auto;
-  white-space: pre;
-}
-
-.editor-status-bar {
-  height: 30px;
-  background: var(--bg-surface-alt);
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 12px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.status-badge-info {
-  background: var(--success-bg);
-  color: var(--success-text);
-  padding: 2px 8px;
-  border-radius: var(--radius-pill);
-  margin-right: 8px;
-}
-
-/* Preview Canvas & Floating Image Toolbar */
-.preview-pane {
-  background: #ffffff;
-  position: relative;
-}
-
-.preview-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: #ffffff;
-}
-
-.image-context-toolbar {
-  position: absolute;
-  top: 54px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 25;
-  background: rgba(15, 23, 42, 0.92);
-  backdrop-filter: blur(8px);
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: var(--radius-pill);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: var(--shadow-lg);
-  white-space: nowrap;
-  max-width: 96%;
-  overflow-x: auto;
-}
-
-.img-toolbar-label {
-  font-size: 0.72rem;
-  color: #94a3b8;
-  font-weight: 600;
-  margin-right: 4px;
-}
-
-.img-tool-btn {
-  padding: 4px 9px;
-  border-radius: var(--radius-pill);
-  font-size: 0.74rem;
-  font-weight: 600;
-  color: #f8fafc;
-  background: rgba(255, 255, 255, 0.1);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.img-tool-btn:hover {
-  background: var(--primary);
-}
-
-.toolbar-sep {
-  width: 1px;
-  height: 16px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 0 2px;
-}
-
-/* Fullscreen Mode */
-body.fullscreen-preview .studio-header,
-body.fullscreen-preview .studio-toolbar,
-body.fullscreen-preview .file-tabs-bar {
-  display: none !important;
-}
-
-.fullscreen-bar {
-  height: 50px;
-  background: var(--bg-surface);
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 14px;
-}
-
-.fs-left, .fs-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.fs-title {
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.zoom-controls {
-  display: inline-flex;
-  align-items: center;
-  background: var(--bg-pill);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-pill);
-  padding: 2px 6px;
-  gap: 8px;
-  font-size: 0.78rem;
-  font-weight: 600;
-}
-.zoom-controls button {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  font-size: 1rem;
-}
-
-.btn-fs-exit {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--primary);
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-theme');
 }
 
 /* =========================================================
-   SLIDE-OVER LEFT DRAWER (FILES, OUTLINE, MARGINS)
+   3. STUDIO WORKSPACE & TABS
    ========================================================= */
-.drawer-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.35);
-  z-index: 40;
+function getActiveProject() {
+  return appState.projects.find(p => p.id === appState.activeProjectId) || appState.projects[0];
 }
 
-.slide-drawer {
-  position: fixed;
-  top: 108px;
-  bottom: 0;
-  left: 0;
-  width: 320px;
-  max-width: 88vw;
-  background: var(--bg-surface);
-  border-right: 1px solid var(--border-color);
-  box-shadow: var(--shadow-lg);
-  z-index: 45;
-  transform: translateX(-105%);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
+function getActiveFile() {
+  const proj = getActiveProject();
+  if (!proj) return null;
+  return proj.files.find(f => f.id === appState.activeFileId) || proj.files[0];
 }
 
-.slide-drawer.open {
-  transform: translateX(0);
-}
-
-@media (min-width: 768px) {
-  #studio-view {
-    position: relative;
+function openProjectInStudio(projId) {
+  const proj = appState.projects.find(p => p.id === projId);
+  if (!proj) return;
+  appState.activeProjectId = proj.id;
+  if (proj.files.length === 0) {
+    proj.files.push({ id: 'file-' + Date.now(), name: 'Note 1', content: '<h1>New Note</h1>', versions: [] });
   }
+  appState.activeFileId = proj.files[0].id;
 
-  #studio-view.drawer-open .workspace-body {
-    width: calc(100% - 320px);
-    margin-left: 320px;
+  document.getElementById('home-view').classList.remove('active');
+  document.getElementById('studio-view').classList.add('active');
+
+  renderFileTabs();
+  loadActiveFileIntoStudio();
+  renderDrawerFilesList();
+}
+
+function closeStudioToHome() {
+  saveActiveNote(false);
+  document.getElementById('studio-view').classList.remove('active');
+  document.getElementById('home-view').classList.add('active');
+  renderProjectsList();
+}
+
+function renderFileTabs() {
+  const proj = getActiveProject();
+  if (!proj) return;
+  const container = document.getElementById('file-tabs-scroll');
+
+  container.innerHTML = proj.files.map(file => {
+    const isActive = file.id === appState.activeFileId;
+    return `
+      <div class="file-tab ${isActive ? 'active' : ''}" onclick="switchActiveFileTab('${file.id}')">
+        <i data-lucide="file-text" class="icon-xs"></i>
+        <span>${escapeHtml(file.name)}</span>
+        ${isActive ? `
+          <button class="tab-icon-btn" onclick="event.stopPropagation(); renameActiveFilePrompt('${file.id}')">
+            <i data-lucide="pencil" style="width:12px;height:12px;"></i>
+          </button>
+        ` : ''}
+        <button class="tab-icon-btn" onclick="event.stopPropagation(); closeOrDeleteFileTab('${file.id}')">
+          <i data-lucide="x" style="width:13px;height:13px;"></i>
+        </button>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('modal-zip-subtext').textContent = `${proj.files.length} files included (${proj.name})`;
+  document.getElementById('drawer-project-title').textContent = `${proj.name.toUpperCase()} (${proj.files.length})`;
+  if (window.lucide) lucide.createIcons();
+}
+
+function switchActiveFileTab(fileId) {
+  saveActiveNote(false);
+  appState.activeFileId = fileId;
+  deselectAnyImage();
+  renderFileTabs();
+  loadActiveFileIntoStudio();
+  renderDrawerFilesList();
+}
+
+function addNewNoteTab() {
+  const proj = getActiveProject();
+  if (!proj) return;
+  const name = prompt('New note file name:', `Note ${proj.files.length + 1}`);
+  if (!name || !name.trim()) return;
+
+  const newFile = {
+    id: 'file-' + Date.now(),
+    name: name.trim(),
+    content: `<h1>${escapeHtml(name.trim())}</h1>\n<h2>1. Section Heading</h2>\n<p>Write your note content, or use Edit preview to add images.</p>`,
+    versions: []
+  };
+
+  proj.files.push(newFile);
+  proj.updatedAt = formatTodayDate();
+  appState.activeFileId = newFile.id;
+  saveStateToStorage();
+
+  renderFileTabs();
+  loadActiveFileIntoStudio();
+  renderDrawerFilesList();
+}
+
+function renameActiveFilePrompt(fileId) {
+  const proj = getActiveProject();
+  const file = proj?.files.find(f => f.id === fileId);
+  if (!file) return;
+  const newName = prompt('Rename note:', file.name);
+  if (newName && newName.trim()) {
+    file.name = newName.trim();
+    saveStateToStorage();
+    renderFileTabs();
+    renderDrawerFilesList();
+    updateLineNumbersAndStatus();
   }
+}
 
-  #studio-view .slide-drawer {
-    position: absolute;
-    top: 152px;
-    bottom: 0;
-    left: 0;
-    width: 320px;
-    max-width: none;
-    transform: translateX(-105%);
+function closeOrDeleteFileTab(fileId) {
+  const proj = getActiveProject();
+  if (!proj || proj.files.length <= 1) {
+    alert('Each project must have at least one note file.');
+    return;
   }
+  const target = proj.files.find(f => f.id === fileId);
+  if (!confirm(`Delete "${target.name}"?`)) return;
 
-  #studio-view .slide-drawer.open {
-    transform: translateX(0);
-  }
-
-  #studio-view .drawer-backdrop {
-    display: none !important;
-  }
-}
-
-.drawer-header {
-  padding: 12px;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.drawer-tabs {
-  display: flex;
-  background: var(--bg-pill);
-  padding: 3px;
-  border-radius: var(--radius-pill);
-  flex: 1;
-}
-
-.dtab {
-  flex: 1;
-  padding: 6px 8px;
-  border-radius: var(--radius-pill);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-align: center;
-}
-
-.dtab.active {
-  background: var(--bg-surface);
-  color: var(--primary);
-  box-shadow: var(--shadow-sm);
-}
-
-.drawer-panel {
-  flex: 1;
-  overflow-y: auto;
-  padding: 12px;
-}
-
-/* Drawer Tab 1: Files */
-.drawer-search-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--bg-surface-alt);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 8px 10px;
-  margin-bottom: 14px;
-}
-.drawer-search-box input {
-  border: none;
-  outline: none;
-  background: transparent;
-  width: 100%;
-  font-size: 0.82rem;
-}
-
-.drawer-project-subheader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.drawer-proj-name {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-  letter-spacing: 0.04em;
-}
-.drawer-proj-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-xs-primary {
-  background: var(--primary);
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-size: 0.74rem;
-  font-weight: 600;
-}
-
-.drawer-files-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.drawer-file-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  background: var(--bg-surface);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-.drawer-file-item.active {
-  border-color: var(--primary);
-  background: var(--primary-soft);
-  color: var(--primary);
-}
-
-/* Drawer Tab 2: Outline */
-.outline-subheader {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  margin-bottom: 10px;
-}
-
-.outline-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.outline-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 10px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.outline-item:hover {
-  background: var(--bg-pill);
-}
-
-.outline-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  overflow: hidden;
-}
-
-.h-badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 5px;
-  flex-shrink: 0;
-}
-.h-badge.h1 { background: #dbeafe; color: #1d4ed8; }
-.h-badge.h2 { background: #f3e8ff; color: #7e22ce; }
-.h-badge.h3 { background: #f1f5f9; color: #475569; }
-
-.outline-item.level-2 { padding-left: 18px; }
-.outline-item.level-3 { padding-left: 30px; }
-
-.outline-text {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-main);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Drawer Tab 3: Margins */
-.margins-top-card {
-  margin-bottom: 14px;
-}
-.margins-top-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.82rem;
-  margin-bottom: 4px;
-}
-.text-btn-primary {
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 0.78rem;
-}
-.margins-subtext {
-  font-size: 0.72rem;
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
-.margin-control-box {
-  background: var(--bg-surface-alt);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 12px;
-  margin-bottom: 16px;
-}
-
-.margin-row-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.76rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-input[type="range"] {
-  width: 100%;
-  accent-color: var(--primary);
-  cursor: pointer;
-}
-
-.btn-booklet-gutter {
-  margin-top: 10px;
-  width: 100%;
-  padding: 8px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  background: var(--bg-surface);
-  font-size: 0.76rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.margin-slider-group {
-  margin-bottom: 16px;
-}
-.slider-title {
-  font-size: 0.72rem;
-  color: var(--text-secondary);
-  letter-spacing: 0.04em;
-}
-.slider-badge {
-  background: var(--primary-soft);
-  color: var(--primary);
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 0.74rem;
+  proj.files = proj.files.filter(f => f.id !== fileId);
+  if (appState.activeFileId === fileId) appState.activeFileId = proj.files[0].id;
+  saveStateToStorage();
+  renderFileTabs();
+  loadActiveFileIntoStudio();
+  renderDrawerFilesList();
 }
 
 /* =========================================================
-   DIRECT LIVE PREVIEW CANVAS & IMAGE DRAG/RESIZE HANDLES
+   4. DIRECT DOM PREVIEW ENGINE (KA-TEX + INTERACTIVE IMAGES)
    ========================================================= */
-.btn-tiny-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  margin-left: 3px;
+function setupSplitDivider() {
+  const divider = document.getElementById('split-divider');
+  const workspace = document.getElementById('workspace-body');
+  if (!divider || !workspace) return;
+
+  const applyRatio = (ratio) => {
+    appState.splitRatio = Math.max(25, Math.min(75, ratio));
+    workspace.style.setProperty('--split-ratio', `${appState.splitRatio}%`);
+    divider.setAttribute('aria-valuenow', Math.round(appState.splitRatio));
+  };
+  applyRatio(Number(appState.splitRatio) || 50);
+
+  divider.addEventListener('pointerdown', (event) => {
+    if (appState.viewMode !== 'split') return;
+    event.preventDefault();
+    divider.setPointerCapture(event.pointerId);
+    const resize = (pointerEvent) => {
+      const bounds = workspace.getBoundingClientRect();
+      if (!bounds.width) return;
+      applyRatio(((pointerEvent.clientX - bounds.left) / bounds.width) * 100);
+    };
+    const finish = () => {
+      divider.removeEventListener('pointermove', resize);
+      divider.removeEventListener('pointerup', finish);
+      divider.removeEventListener('pointercancel', finish);
+      saveStateToStorage();
+    };
+    divider.addEventListener('pointermove', resize);
+    divider.addEventListener('pointerup', finish);
+    divider.addEventListener('pointercancel', finish);
+  });
+
+  divider.addEventListener('keydown', (event) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    if (event.key === 'ArrowLeft') applyRatio(appState.splitRatio - 2);
+    if (event.key === 'ArrowRight') applyRatio(appState.splitRatio + 2);
+    if (event.key === 'Home') applyRatio(25);
+    if (event.key === 'End') applyRatio(75);
+    saveStateToStorage();
+  });
 }
 
-.tool-btn-accent {
-  width: auto !important;
-  padding: 0 10px !important;
-  cursor: pointer;
+function setupCodeEditorListeners() {
+  const textarea = document.getElementById('html-code-editor');
+  const lineNums = document.getElementById('line-numbers');
+  setupSplitDivider();
+
+  textarea.addEventListener('input', () => {
+    const file = getActiveFile();
+    if (!file) return;
+    pushHistoryState(file.id, textarea.value);
+    file.content = textarea.value;
+    updateLineNumbersAndStatus();
+
+    clearTimeout(previewRenderTimer);
+    previewRenderTimer = setTimeout(() => {
+      renderLivePreview();
+      saveStateToStorage();
+    }, 200);
+  });
+
+  textarea.addEventListener('scroll', () => {
+    lineNums.scrollTop = textarea.scrollTop;
+  });
+  textarea.addEventListener('keydown', handleEditorUndoShortcut);
+
+  const previewCanvas = document.getElementById('preview-canvas');
+  previewCanvas.addEventListener('keydown', handleEditorUndoShortcut);
+  previewCanvas.addEventListener('input', () => {
+    if (previewEditMode) syncPreviewCanvasToEditor();
+  });
+  ['mouseup', 'keyup'].forEach(type => previewCanvas.addEventListener(type, () => {
+    if (!previewEditMode) setTimeout(jumpFromPreviewSelectionToCode, 0);
+  }));
+
+  document.getElementById('preview-scroll-wrapper').addEventListener('click', (e) => {
+    if (!e.target.closest('.studio-img-widget') && !e.target.closest('#image-context-toolbar')) {
+      deselectAnyImage();
+    }
+  });
 }
 
-.preview-edit-toolbar {
-  position: absolute;
-  top: 10px;
-  left: 12px;
-  z-index: 24;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+function handleEditorUndoShortcut(event) {
+  if (!(event.ctrlKey || event.metaKey)) return;
+  const key = event.key.toLowerCase();
+  if (key === 'z') {
+    event.preventDefault();
+    event.shiftKey ? editorRedo() : editorUndo();
+  } else if (key === 'y') {
+    event.preventDefault();
+    editorRedo();
+  }
 }
 
-.preview-edit-toggle {
-  width: 36px;
-  min-width: 36px;
-  min-height: 36px;
-  padding: 0;
-  border: 1px solid var(--border-color);
-  background: var(--bg-surface);
-  box-shadow: var(--shadow-sm);
+function loadActiveFileIntoStudio() {
+  const file = getActiveFile();
+  if (!file) return;
+  const textarea = document.getElementById('html-code-editor');
+  textarea.value = file.content || '';
+  if (!historyStack[file.id]) {
+    historyStack[file.id] = { past: [file.content], future: [] };
+  }
+  document.getElementById('fs-file-title').textContent = file.name;
+  updateLineNumbersAndStatus();
+  renderLivePreview();
 }
 
-.preview-image-upload {
-  width: auto;
-  min-height: 34px;
-  padding: 0 12px;
-  gap: 7px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-surface);
-  box-shadow: var(--shadow-sm);
-  font-size: 0.76rem;
-  font-weight: 600;
+function updateLineNumbersAndStatus() {
+  const textarea = document.getElementById('html-code-editor');
+  const lineNums = document.getElementById('line-numbers');
+  const file = getActiveFile();
+  const lines = (textarea.value || '').split('\n').length;
+  let numsHtml = '';
+  for (let i = 1; i <= lines; i++) numsHtml += i + '<br>';
+  lineNums.innerHTML = numsHtml;
+  document.getElementById('status-file-name').textContent = file ? file.name : 'Note';
+  document.getElementById('status-line-count').textContent = `${lines} lines`;
 }
 
-.preview-edit-toggle.active {
-  color: var(--primary);
-  border-color: var(--primary);
-  background: var(--primary-soft);
+function togglePreviewEditMode() {
+  if (!previewEditMode && appState.viewMode === 'editor') setStudioViewMode('preview');
+  if (previewEditMode) syncPreviewCanvasToEditor();
+  previewEditMode = !previewEditMode;
+  const canvas = document.getElementById('preview-canvas');
+  const toggle = document.getElementById('preview-edit-toggle');
+  const imageUpload = document.getElementById('preview-image-upload-label');
+  canvas.contentEditable = previewEditMode ? 'true' : 'false';
+  canvas.classList.toggle('preview-editing', previewEditMode);
+  toggle.classList.toggle('active', previewEditMode);
+  toggle.setAttribute('aria-pressed', String(previewEditMode));
+  toggle.setAttribute('aria-label', previewEditMode ? 'Finish editing preview' : 'Edit preview text and add images');
+  toggle.title = previewEditMode ? 'Finish editing preview' : 'Edit preview text and add images';
+  imageUpload.classList.toggle('hidden', !previewEditMode);
 }
 
-.preview-editing {
-  outline: 2px dashed var(--primary);
-  outline-offset: -4px;
-  caret-color: var(--primary);
+function syncPreviewCanvasToEditor() {
+  const file = getActiveFile();
+  const canvas = document.getElementById('preview-canvas');
+  if (!file || !canvas) return;
+
+  const clone = canvas.cloneNode(true);
+  clone.querySelectorAll('.studio-resize-handle').forEach(handle => handle.remove());
+  clone.querySelectorAll('.studio-img-widget').forEach(widget => {
+    widget.classList.remove('studio-selected-img');
+    widget.removeAttribute('draggable');
+  });
+  clone.removeAttribute('contenteditable');
+  clone.classList.remove('preview-editing');
+
+  const parser = new DOMParser();
+  const source = parser.parseFromString(file.content || '', 'text/html');
+  const originalHeadStyles = Array.from(source.head.querySelectorAll('style')).map(style => style.textContent);
+  clone.querySelectorAll('style').forEach(style => {
+    if (originalHeadStyles.includes(style.textContent)) style.remove();
+  });
+  source.body.innerHTML = clone.innerHTML;
+  commitEditorContent(source.documentElement.outerHTML);
+  buildDocumentOutline();
 }
 
-.preview-editing:focus {
-  outline-style: solid;
+function jumpFromPreviewSelectionToCode() {
+  const selection = window.getSelection();
+  const selectedText = selection ? selection.toString().trim() : '';
+  const file = getActiveFile();
+  if (!selectedText || !file) return;
+
+  const textarea = document.getElementById('html-code-editor');
+  const candidates = [selectedText, escapeHtml(selectedText), selectedText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')];
+  let start = -1;
+  let match = selectedText;
+  for (const candidate of candidates) {
+    start = file.content.indexOf(candidate);
+    if (start !== -1) { match = candidate; break; }
+  }
+  if (start === -1) return;
+
+  const previewWrapper = document.getElementById('preview-scroll-wrapper');
+  const previewScrollTop = previewWrapper.scrollTop;
+  if (appState.viewMode !== 'split') setStudioViewMode('split');
+  previewWrapper.scrollTop = previewScrollTop;
+
+  textarea.focus();
+  textarea.setSelectionRange(start, start + match.length);
+  const lineStart = file.content.lastIndexOf('\n', start - 1) + 1;
+  textarea.scrollTop = (file.content.slice(0, lineStart).match(/\n/g) || []).length * 18;
 }
 
-.preview-scroll-wrapper {
-  flex: 1 1 0;
-  min-height: 0;
-  width: 100%;
-  padding-top: 52px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: #ffffff;
-}
+function renderLivePreview() {
+  const file = getActiveFile();
+  const canvas = document.getElementById('preview-canvas');
+  if (!file || !canvas) return;
 
-.preview-canvas {
-  width: 100%;
-  min-height: 100%;
-  background: #ffffff;
-  color: #1e293b;
-  transition: padding 0.15s ease;
-}
+  const { gutter, side, vert, fontSize } = appState.margins;
+  const totalLeft = Number(gutter) + Number(side);
 
-/* Interactive Image Widget inside Preview Canvas */
-.studio-img-widget {
-  position: relative;
-  display: inline-block;
-  max-width: 100%;
-  margin: 10px 0;
-  cursor: grab;
-  vertical-align: top;
-  border-radius: 8px;
-  transition: outline 0.12s ease;
-}
+  canvas.style.paddingTop = `${vert}mm`;
+  canvas.style.paddingBottom = `${vert}mm`;
+  canvas.style.paddingLeft = `${totalLeft}mm`;
+  canvas.style.paddingRight = `${side}mm`;
+  canvas.style.fontSize = `${fontSize}px`;
+  canvas.style.zoom = `${appState.zoomLevel}%`;
 
-.studio-img-widget:active {
-  cursor: grabbing;
-}
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(file.content || '', 'text/html');
+  const styles = Array.from(doc.head.querySelectorAll('style')).map(s => s.outerHTML).join('\n');
+  const bodyHtml = doc.body ? doc.body.innerHTML : (file.content || '');
 
-.studio-img-widget.wrap-left {
-  float: left;
-  margin: 4px 16px 12px 0;
-}
+  canvas.innerHTML = styles + '\n' + bodyHtml;
+  canvas.contentEditable = previewEditMode ? 'true' : 'false';
+  canvas.classList.toggle('preview-editing', previewEditMode);
 
-.studio-img-widget.wrap-right {
-  float: right;
-  margin: 4px 0 12px 16px;
-}
+  if (window.renderMathInElement) {
+    try {
+      renderMathInElement(canvas, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        throwOnError: false
+      });
+    } catch (e) {}
+  }
 
-.studio-img-widget.wrap-none {
-  display: block;
-  float: none;
-  margin: 14px auto;
-  clear: both;
-}
-
-.studio-img-widget img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  border-radius: 8px;
-  pointer-events: none;
-  user-select: none;
-}
-
-.studio-img-widget.studio-selected-img {
-  outline: 3px solid #1a56db;
-  outline-offset: 2px;
-}
-
-/* Bottom-Right Corner Stretch/Resize Handle */
-.studio-resize-handle {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  right: -8px;
-  bottom: -8px;
-  background: #1a56db;
-  border: 2.5px solid #ffffff;
-  border-radius: 50%;
-  cursor: nwse-resize;
-  display: none;
-  z-index: 20;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-.studio-img-widget.studio-selected-img .studio-resize-handle {
-  display: block;
-}
-
-.studio-drop-target {
-  border-top: 3px dashed #1a56db !important;
-  padding-top: 6px !important;
+  bindInteractiveImagesInPreview();
+  buildDocumentOutline();
 }
 
 /* =========================================================
-   STUDIO OPTIONS & PRINT READY OVERLAYS
+   5. SMART IMAGE UPLOAD, WEBP COMPRESSION, DRAG & RESIZE
    ========================================================= */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  background: rgba(15, 23, 42, 0.48);
-  backdrop-filter: blur(3px);
+function handleSmartImageUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (appState.viewMode === 'editor') {
+    setStudioViewMode('preview');
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX_WIDTH = 1100;
+      let targetW = img.width;
+      let targetH = img.height;
+
+      if (targetW > MAX_WIDTH) {
+        const ratio = MAX_WIDTH / targetW;
+        targetW = MAX_WIDTH;
+        targetH = Math.round(targetH * ratio);
+      }
+
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = targetW;
+      offCanvas.height = targetH;
+      const ctx = offCanvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, targetW, targetH);
+
+      let compressedDataUrl = offCanvas.toDataURL('image/webp', 0.84);
+      if (!compressedDataUrl.startsWith('data:image/webp')) {
+        compressedDataUrl = offCanvas.toDataURL('image/jpeg', 0.84);
+      }
+
+      const origKB = Math.max(1, Math.round(file.size / 1024));
+      const compKB = Math.max(1, Math.round((compressedDataUrl.length * 3) / 4 / 1024));
+
+      const badge = document.getElementById('status-image-info');
+      if (badge) {
+        badge.textContent = `Compressed: ${origKB}KB → ${compKB}KB`;
+        badge.classList.remove('hidden');
+      }
+
+      insertInteractiveImageWidget(compressedDataUrl, Math.min(260, targetW));
+      event.target.value = '';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
 }
 
-.studio-modal-card {
-  width: min(100%, 440px);
-  max-height: min(85dvh, 720px);
-  overflow-y: auto;
-  padding: 18px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  background: var(--bg-surface);
-  color: var(--text-main);
-  box-shadow: var(--shadow-lg);
+function insertInteractiveImageWidget(dataUrl, initialWidth) {
+  const activeFile = getActiveFile();
+  if (!activeFile) return;
+
+  const widgetId = 'studio-img-' + Date.now();
+  const widgetHtml = `\n<div id="${widgetId}" class="studio-img-widget wrap-right" style="width: ${initialWidth}px;">\n  <img src="${dataUrl}" alt="Note Diagram" />\n  <div class="studio-resize-handle"></div>\n</div>\n`;
+
+  let raw = activeFile.content || '';
+  if (raw.includes('</h2>')) {
+    raw = raw.replace('</h2>', '</h2>\n' + widgetHtml);
+  } else if (raw.includes('</body>')) {
+    raw = raw.replace('</body>', widgetHtml + '\n</body>');
+  } else {
+    raw += widgetHtml;
+  }
+
+  commitEditorContent(raw);
+  renderLivePreview();
+
+  setTimeout(() => {
+    const newEl = document.getElementById(widgetId);
+    if (newEl) {
+      selectImageWidget(newEl);
+      newEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, 120);
 }
 
-.modal-header,
-.fb-card-top,
-.fb-title,
-.modal-option-item {
-  display: flex;
-  align-items: center;
+function bindInteractiveImagesInPreview() {
+  const canvas = document.getElementById('preview-canvas');
+  if (!canvas) return;
+
+  canvas.querySelectorAll('img').forEach(img => {
+    if (!img.closest('.studio-img-widget')) {
+      const wrapper = document.createElement('div');
+      wrapper.id = 'studio-img-' + Math.floor(Math.random() * 1000000);
+      wrapper.className = 'studio-img-widget wrap-none';
+      wrapper.style.width = (img.width ? Math.min(img.width, 320) : 260) + 'px';
+      img.parentNode.insertBefore(wrapper, img);
+      wrapper.appendChild(img);
+    }
+  });
+
+  canvas.querySelectorAll('.studio-img-widget').forEach(widget => {
+    if (!widget.querySelector('.studio-resize-handle')) {
+      const handle = document.createElement('div');
+      handle.className = 'studio-resize-handle';
+      widget.appendChild(handle);
+    }
+
+    widget.setAttribute('draggable', 'true');
+    widget.onclick = (e) => {
+      e.stopPropagation();
+      selectImageWidget(widget);
+    };
+
+    const handle = widget.querySelector('.studio-resize-handle');
+    let isResizing = false;
+    let startX = 0, startY = 0, startW = 0, startH = 0;
+
+    const onStartResize = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      selectImageWidget(widget);
+      isResizing = true;
+      const pt = e.touches ? e.touches[0] : e;
+      startX = pt.clientX;
+      startY = pt.clientY;
+      startW = widget.offsetWidth;
+      startH = widget.offsetHeight;
+
+      document.addEventListener('mousemove', onMoveResize);
+      document.addEventListener('mouseup', onStopResize);
+      document.addEventListener('touchmove', onMoveResize, { passive: false });
+      document.addEventListener('touchend', onStopResize);
+    };
+
+    const onMoveResize = (e) => {
+      if (!isResizing) return;
+      e.preventDefault();
+      const pt = e.touches ? e.touches[0] : e;
+      const newW = Math.max(60, startW + (pt.clientX - startX));
+      const newH = Math.max(40, startH + (pt.clientY - startY));
+      widget.style.width = newW + 'px';
+      widget.style.height = newH + 'px';
+    };
+
+    const onStopResize = () => {
+      if (!isResizing) return;
+      isResizing = false;
+      document.removeEventListener('mousemove', onMoveResize);
+      document.removeEventListener('mouseup', onStopResize);
+      document.removeEventListener('touchmove', onMoveResize);
+      document.removeEventListener('touchend', onStopResize);
+      syncWidgetChangesBackToEditor(widget);
+    };
+
+    handle.onmousedown = onStartResize;
+    handle.ontouchstart = onStartResize;
+
+    widget.ondragstart = (e) => {
+      selectImageWidget(widget);
+      e.dataTransfer.setData('text/plain', widget.id);
+    };
+  });
+
+  canvas.ondragover = (e) => {
+    e.preventDefault();
+    const target = e.target.closest('p, div.def-box, h2, h3, div.graph-card');
+    canvas.querySelectorAll('.studio-drop-target').forEach(el => el.classList.remove('studio-drop-target'));
+    if (target && !target.classList.contains('studio-img-widget')) {
+      target.classList.add('studio-drop-target');
+    }
+  };
+
+  canvas.ondrop = (e) => {
+    e.preventDefault();
+    canvas.querySelectorAll('.studio-drop-target').forEach(el => el.classList.remove('studio-drop-target'));
+    const target = e.target.closest('p, div.def-box, h2, h3, div.graph-card');
+    if (selectedImageWidget && target && target !== selectedImageWidget && target.parentNode) {
+      target.parentNode.insertBefore(selectedImageWidget, target);
+      syncAllPreviewImagesToCode();
+    }
+  };
 }
 
-.modal-header,
-.fb-card-top {
-  justify-content: space-between;
+function selectImageWidget(widget) {
+  document.querySelectorAll('.studio-img-widget').forEach(el => el.classList.remove('studio-selected-img'));
+  widget.classList.add('studio-selected-img');
+  selectedImageWidget = widget;
+  document.getElementById('image-context-toolbar').classList.remove('hidden');
 }
 
-.modal-header { margin-bottom: 14px; }
-.modal-title {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
+function deselectAnyImage() {
+  document.querySelectorAll('.studio-img-widget').forEach(el => el.classList.remove('studio-selected-img'));
+  selectedImageWidget = null;
+  document.getElementById('image-context-toolbar').classList.add('hidden');
 }
 
-.firebase-sync-card {
-  padding: 14px;
-  margin-bottom: 14px;
-  border: 1px solid var(--primary-light);
-  border-radius: var(--radius-md);
-  background: var(--primary-soft);
-}
-.fb-title { gap: 8px; font-size: 0.9rem; }
-.sync-pill,
-.zip-badge {
-  padding: 4px 8px;
-  border-radius: var(--radius-pill);
-  background: var(--bg-surface);
-  color: var(--primary);
-  font-size: 0.68rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.fb-desc {
-  margin-top: 8px;
-  color: var(--text-secondary);
-  font-size: 0.78rem;
-  line-height: 1.45;
+function setSelectedImageWrap(mode) {
+  if (!selectedImageWidget) return;
+  selectedImageWidget.classList.remove('wrap-left', 'wrap-right', 'wrap-none');
+  selectedImageWidget.classList.add('wrap-' + mode);
+  syncWidgetChangesBackToEditor(selectedImageWidget);
 }
 
-.modal-options-list { display: flex; flex-direction: column; gap: 7px; }
-.modal-option-item {
-  width: 100%;
-  min-height: 52px;
-  gap: 12px;
-  padding: 10px 12px;
-  border: 1px solid transparent;
-  border-radius: var(--radius-md);
-  color: var(--text-main);
-  text-align: left;
-  text-decoration: none;
-  background: transparent;
+function scaleSelectedImage(ratio) {
+  if (!selectedImageWidget) return;
+  const canvasW = document.getElementById('preview-canvas').clientWidth || 600;
+  selectedImageWidget.style.width = Math.round(canvasW * ratio) + 'px';
+  selectedImageWidget.style.height = 'auto';
+  syncWidgetChangesBackToEditor(selectedImageWidget);
 }
-.modal-option-item:hover { background: var(--bg-surface-alt); border-color: var(--border-color); }
-.modal-option-item > .opt-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-.opt-text strong { font-size: 0.84rem; }
-.opt-text span { color: var(--text-muted); font-size: 0.72rem; }
-.modal-option-item.highlighted { background: var(--primary-soft); border-color: var(--primary-light); }
-.modal-option-item.danger { color: var(--danger); }
-.modal-divider { height: 1px; margin: 5px 0; background: var(--border-color); }
 
-.print-toast {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 70;
-  width: min(390px, calc(100vw - 28px));
-  padding: 16px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  background: var(--bg-surface);
-  color: var(--text-main);
-  box-shadow: var(--shadow-lg);
+function moveSelectedImageUpDown(direction) {
+  if (!selectedImageWidget || !selectedImageWidget.parentNode) return;
+  const parent = selectedImageWidget.parentNode;
+  if (direction < 0 && selectedImageWidget.previousElementSibling) {
+    parent.insertBefore(selectedImageWidget, selectedImageWidget.previousElementSibling);
+  } else if (direction > 0 && selectedImageWidget.nextElementSibling) {
+    parent.insertBefore(selectedImageWidget.nextElementSibling, selectedImageWidget);
+  }
+  selectedImageWidget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  syncAllPreviewImagesToCode();
 }
-.print-toast-header,
-.print-toast-title,
-.print-toast-actions {
-  display: flex;
-  align-items: center;
+
+function deleteSelectedImage() {
+  if (!selectedImageWidget) return;
+  selectedImageWidget.remove();
+  deselectAnyImage();
+  syncPreviewCanvasToEditor();
 }
-.print-toast-header { justify-content: space-between; }
-.print-toast-title { gap: 8px; font-weight: 700; }
-.print-toast-desc { margin: 10px 0 14px; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; }
-.print-toast-actions { flex-direction: column; align-items: stretch; gap: 8px; }
-.btn-primary-block,
-.btn-secondary-icon {
-  min-height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 9px 12px;
-  border-radius: var(--radius-md);
-  font-size: 0.82rem;
-  font-weight: 600;
+
+function syncWidgetChangesBackToEditor(widget) {
+  if (!getActiveFile() || !widget || !widget.id) return;
+  syncPreviewCanvasToEditor();
 }
-.btn-primary-block { background: var(--primary); color: #fff; }
-.btn-primary-block:hover { background: var(--primary-hover); }
-.btn-secondary-icon { border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-main); }
-.btn-secondary-icon:hover { background: var(--bg-surface-alt); }
+
+function syncAllPreviewImagesToCode() {
+  syncPreviewCanvasToEditor();
+}
 
 /* =========================================================
-   NATIVE @MEDIA PRINT ENGINE (Prints ONLY the Note Content)
+   6. PRINT ENGINE
    ========================================================= */
-@media print {
-  body * {
-    visibility: hidden;
+function triggerPrintDocument() {
+  closeStudioOptionsModal();
+  deselectAnyImage();
+  document.getElementById('print-ready-toast').classList.remove('hidden');
+}
+
+function executeDirectPrint() {
+  closePrintToast();
+  setStudioViewMode('preview');
+
+  const file = getActiveFile();
+  if (!file) return;
+
+  const { gutter, side, vert } = appState.margins;
+  const leftMM = Number(gutter) + Math.max(Number(side), 6);
+  const rightMM = Math.max(Number(side), 6);
+  const verticalMM = Math.max(Number(vert), 10);
+  let pageStyle = document.getElementById('studio-print-page-style');
+  if (!pageStyle) {
+    pageStyle = document.createElement('style');
+    pageStyle.id = 'studio-print-page-style';
+    document.head.appendChild(pageStyle);
   }
-  #studio-view,
-  #workspace-body,
-  #preview-pane,
-  #preview-scroll-wrapper,
-  #preview-canvas,
-  #preview-canvas * {
-    visibility: visible !important;
-  }
-  .studio-header,
-  .studio-toolbar,
-  .file-tabs-bar,
-  .fullscreen-bar,
-  .editor-pane,
-  .preview-edit-toolbar,
-  .image-context-toolbar,
-  .slide-drawer,
-  .drawer-backdrop,
-  .modal-backdrop,
-  .print-toast,
-  .studio-resize-handle {
-    display: none !important;
-  }
-  #studio-view,
-  #workspace-body,
-  #preview-pane,
-  #preview-scroll-wrapper {
-    position: static !important;
-    overflow: visible !important;
-    height: auto !important;
-    width: 100% !important;
-  }
-  #preview-scroll-wrapper {
-    padding-top: 0 !important;
-  }
-  #preview-canvas {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    box-shadow: none !important;
-  }
-  .studio-img-widget.studio-selected-img {
-    outline: none !important;
-  }
+  pageStyle.textContent = `@page { margin: ${verticalMM}mm ${rightMM}mm ${verticalMM}mm ${leftMM}mm; }`;
+  window.print();
+}
+
+function downloadPrintReadyHTML() {
+  closePrintToast();
+  const file = getActiveFile();
+  if (!file) return;
+
+  const { gutter, side, vert, fontSize } = appState.margins;
+  const totalLeft = Number(gutter) + Math.max(Number(side), 6);
+  const printableHtml = buildStandalonePrintableHTML(file, Math.max(vert, 10), totalLeft, Math.max(side, 6), fontSize);
+
+  const blob = new Blob([printableHtml], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${file.name}_Print_Ready.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function buildStandalonePrintableHTML(file, vertMM, leftMM, rightMM, fontPx) {
+  const parser = new DOMParser();
+  const source = parser.parseFromString(file.content || '', 'text/html');
+  source.querySelectorAll('script, title').forEach(element => element.remove());
+  const headContent = source.head ? source.head.innerHTML : '';
+  const bodyContent = source.body ? source.body.innerHTML : (file.content || '');
+  const printStyles = `
+    <style>
+      @page { margin: ${vertMM}mm ${rightMM}mm ${vertMM}mm ${leftMM}mm; }
+      html { font-size: ${fontPx}px; }
+      body { font-family: system-ui, -apple-system, sans-serif; color: #0f172a; line-height: 1.6; margin: 0; }
+      .preview-canvas { display: flow-root; }
+      .studio-img-widget { display: inline-block; max-width: 100%; margin: 8px 0; }
+      .studio-img-widget.wrap-left { float: left; margin: 4px 16px 12px 0; }
+      .studio-img-widget.wrap-right { float: right; margin: 4px 0 12px 16px; }
+      .studio-img-widget.wrap-none { display: block; margin: 12px auto; text-align: center; }
+      .studio-img-widget img { width: 100%; height: auto; border-radius: 8px; }
+      .studio-resize-handle { display: none !important; }
+      @media print { .no-print { display: none !important; } }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"><\/script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"><\/script>
+  `;
+  const mathScript = `
+    <script>
+      if (window.renderMathInElement) {
+        renderMathInElement(document.querySelector('.preview-canvas'), {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\\\(', right: '\\\\)', display: false },
+            { left: '\\\\[', right: '\\\\]', display: true }
+          ],
+          throwOnError: false
+        });
+      }
+    <\/script>
+  `;
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>${escapeHtml(file.name)}</title>${headContent}${printStyles}</head><body><main class="preview-canvas">${bodyContent}</main>${mathScript}</body></html>`;
+}
+
+function closePrintToast() {
+  document.getElementById('print-ready-toast').classList.add('hidden');
 }
 
 /* =========================================================
-   MATERIAL 3-INSPIRED HOME DASHBOARD
+   7. OUTLINE, MARGINS, UNDO/REDO & EXPORT TOOLS
    ========================================================= */
-#home-view {
-  background:
-    radial-gradient(ellipse at 92% 8%, rgba(215, 220, 255, 0.32), transparent 32%),
-    var(--bg-app);
-}
+function buildDocumentOutline() {
+  const canvas = document.getElementById('preview-canvas');
+  if (!canvas) return;
+  const headings = Array.from(canvas.querySelectorAll('h1, h2, h3'));
 
-#home-view .app-header {
-  height: 68px;
-  padding-inline: max(24px, calc((100vw - 1120px) / 2));
-  border-bottom-color: transparent;
-  background: color-mix(in srgb, var(--bg-surface) 88%, transparent);
-}
+  document.getElementById('outline-count').textContent = headings.length;
+  document.getElementById('outline-sub-count').textContent = headings.length;
 
-#home-view .app-title {
-  font-size: 1.22rem;
-  letter-spacing: -0.035em;
-}
-
-#home-view .home-content {
-  max-width: 1120px;
-  padding: 32px 28px 56px;
-}
-
-.home-hero {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 270px;
-  overflow: hidden;
-  padding: 38px 46px;
-  border: 1px solid color-mix(in srgb, var(--primary) 12%, var(--border-color));
-  border-radius: 32px;
-  background: linear-gradient(115deg, var(--primary-soft) 0%, var(--bg-surface) 72%);
-  box-shadow: var(--shadow-sm);
-}
-
-.home-hero-copy {
-  position: relative;
-  z-index: 2;
-  max-width: 560px;
-}
-
-.home-eyebrow,
-.home-section-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--primary);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-}
-
-.home-hero h2 {
-  max-width: 520px;
-  margin-top: 14px;
-  color: var(--text-main);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 600;
-  letter-spacing: -0.055em;
-  line-height: 1.08;
-}
-
-.home-hero p {
-  max-width: 440px;
-  margin-top: 12px;
-  color: var(--text-secondary);
-  font-size: 0.94rem;
-  line-height: 1.6;
-}
-
-.home-hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  margin-top: 24px;
-}
-
-.home-hero .btn-primary-pill,
-.home-hero .btn-outline-pill {
-  min-height: 44px;
-  padding: 0 20px;
-  font-size: 0.86rem;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-}
-
-.home-hero .btn-primary-pill:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(26, 86, 219, 0.25);
-}
-
-.home-hero .btn-outline-pill {
-  background: color-mix(in srgb, var(--bg-surface) 78%, transparent);
-}
-
-.home-theme-toggle {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  z-index: 3;
-  background: color-mix(in srgb, var(--bg-surface) 78%, transparent);
-}
-
-.home-hero-art {
-  position: absolute;
-  top: 0;
-  right: 3%;
-  width: 36%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-}
-
-.hero-orbit {
-  position: absolute;
-  width: 230px;
-  height: 230px;
-  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
-  border-radius: 50%;
-}
-
-.hero-orbit-one { transform: scale(1.25); }
-.hero-orbit-two { transform: scale(0.86); }
-
-.hero-note-card {
-  position: relative;
-  width: 184px;
-  min-height: 160px;
-  padding: 20px;
-  border: 1px solid color-mix(in srgb, var(--primary) 13%, var(--border-color));
-  border-radius: 22px;
-  background: var(--bg-surface);
-  color: var(--text-secondary);
-  box-shadow: 0 18px 38px rgba(45, 55, 110, 0.14);
-  transform: rotate(5deg);
-}
-
-.hero-note-icon {
-  width: 27px;
-  height: 27px;
-  margin-bottom: 15px;
-  color: var(--primary);
-}
-
-.hero-note-card span {
-  font-size: 0.82rem;
-  line-height: 1.45;
-}
-.hero-note-card strong { color: var(--text-main); }
-.hero-note-lines { display: grid; gap: 6px; margin-top: 14px; }
-.hero-note-lines i { height: 4px; border-radius: 9px; background: var(--bg-pill); }
-.hero-note-lines i:last-child { width: 62%; }
-
-.home-projects-heading {
-  align-items: flex-end;
-  margin: 38px 2px 18px;
-}
-
-.home-projects-heading .section-title {
-  margin-top: 5px;
-  font-size: 1.45rem;
-  font-weight: 600;
-  letter-spacing: -0.035em;
-}
-
-.home-projects-heading .section-subtitle {
-  margin-top: 5px;
-  font-size: 0.84rem;
-}
-
-#home-view .count-badge {
-  padding: 8px 14px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-pill);
-  background: var(--bg-surface);
-  color: var(--text-secondary);
-  font-size: 0.78rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-#home-view .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: stretch;
-  gap: 16px;
-}
-
-#home-view .project-card {
-  position: relative;
-  min-height: 164px;
-  padding: 20px 20px 16px;
-  border-color: var(--border-color);
-  border-radius: 24px;
-  background: var(--bg-surface);
-  box-shadow: 0 1px 2px rgba(20, 25, 50, 0.04);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-#home-view .project-card:hover {
-  transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--primary) 42%, var(--border-color));
-  box-shadow: var(--shadow-md);
-}
-
-#home-view .project-card-label {
-  display: inline-flex;
-  margin-bottom: 15px;
-  padding: 5px 9px;
-  border-radius: var(--radius-pill);
-  background: var(--primary-soft);
-  color: var(--primary);
-  font-size: 0.63rem;
-  letter-spacing: 0.09em;
-}
-
-#home-view .project-card-main { margin-bottom: 18px; }
-#home-view .project-title-group { min-width: 0; gap: 11px; }
-#home-view .project-title-group > .icon-sm {
-  width: 38px;
-  height: 38px;
-  padding: 9px;
-  border-radius: 13px;
-  background: var(--primary-soft);
-}
-#home-view .project-name {
-  overflow: hidden;
-  font-size: 1.02rem;
-  letter-spacing: -0.02em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-#home-view .project-inline-actions { gap: 2px; }
-#home-view .proj-action-icon { color: var(--text-muted); }
-#home-view .proj-action-icon:hover { color: var(--primary); }
-#home-view .project-card-footer {
-  padding-top: 12px;
-  border-top-color: var(--border-subtle);
-  font-size: 0.74rem;
-}
-#home-view .project-meta { flex-wrap: wrap; gap: 6px 14px; }
-#home-view .chevron-circle { width: 30px; height: 30px; }
-
-@media (max-width: 700px) {
-  #home-view .app-header { padding-inline: 18px; }
-  #home-view .home-content { padding: 20px 16px 36px; }
-  .home-hero { min-height: 260px; padding: 30px 26px; border-radius: 26px; }
-  .home-hero-art { right: -8%; width: 40%; opacity: 0.42; }
-  .home-projects-heading { margin-top: 30px; }
-  #home-view .projects-grid { grid-template-columns: 1fr; gap: 12px; }
-  #home-view .project-card { min-height: 150px; }
-}
-
-@media (max-width: 460px) {
-  .home-hero { min-height: 280px; padding: 28px 20px; }
-  .home-hero-copy { max-width: 100%; }
-  .home-hero h2 { max-width: 310px; font-size: 2.1rem; }
-  .home-hero p { max-width: 300px; font-size: 0.86rem; }
-  .home-hero-art { right: -24%; opacity: 0.18; }
-  .home-hero-actions { gap: 8px; }
-  .home-hero .btn-primary-pill,
-  .home-hero .btn-outline-pill { padding-inline: 14px; font-size: 0.8rem; }
-  .home-projects-heading { align-items: flex-start; gap: 10px; }
-  #home-view .project-card { padding-inline: 15px; }
-  #home-view .project-title-group { gap: 8px; }
-  #home-view .project-inline-actions { margin-left: auto; }
-}
-
-/* Studio controls reflow into two touch-friendly rows on phones. */
-@media (max-width: 560px) {
-  .studio-header {
-    height: 54px;
-    padding-inline: 8px;
+  const listEl = document.getElementById('outline-list');
+  if (headings.length === 0) {
+    listEl.innerHTML = `<p style="font-size:0.8rem;color:#94a3b8;padding:12px;">No H1, H2, or H3 headings found.</p>`;
+    return;
   }
 
-  .studio-header .header-left,
-  .studio-header .header-right {
-    gap: 6px;
-  }
+  listEl.innerHTML = headings.map((h, idx) => {
+    const tag = h.tagName.toLowerCase();
+    const level = tag === 'h1' ? 1 : tag === 'h2' ? 2 : 3;
+    return `
+      <div class="outline-item level-${level}" onclick="scrollToPreviewHeading(${idx})">
+        <div class="outline-left">
+          <span class="h-badge ${tag}">${tag.toUpperCase()}</span>
+          <span class="outline-text">${escapeHtml(h.textContent.trim())}</span>
+        </div>
+        <i data-lucide="chevron-right" class="icon-xs text-muted"></i>
+      </div>
+    `;
+  }).join('');
 
-  .studio-header .app-title {
-    font-size: 1rem;
-  }
+  if (window.lucide) lucide.createIcons();
+}
 
-  .studio-toolbar {
-    height: 46px;
-    min-height: 46px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 4px;
-    padding: 0 8px;
-  }
+function scrollToPreviewHeading(index) {
+  if (appState.viewMode === 'editor') setStudioViewMode('preview');
+  const wrapper = document.getElementById('preview-scroll-wrapper');
+  const canvas = document.getElementById('preview-canvas');
+  const headings = canvas?.querySelectorAll('h1, h2, h3');
+  const heading = headings?.[index];
 
-  .toolbar-left,
-  .toolbar-right {
-    width: auto;
-    min-width: 0;
-    flex: 0 0 auto;
-    gap: 4px;
+  if (wrapper && heading) {
+    const wrapperBounds = wrapper.getBoundingClientRect();
+    const headingBounds = heading.getBoundingClientRect();
+    wrapper.scrollTo({
+      top: wrapper.scrollTop + headingBounds.top - wrapperBounds.top - 12,
+      behavior: 'smooth'
+    });
   }
+  if (window.innerWidth < 768) toggleSlideDrawer(false);
+}
 
-  .toolbar-left {
-    justify-content: flex-start;
-  }
+function updateMarginSettings() {
+  const gutter = Number(document.getElementById('slider-gutter').value);
+  const side = Number(document.getElementById('slider-side').value);
+  const vert = Number(document.getElementById('slider-vert').value);
+  const fontSize = Number(document.getElementById('slider-font').value);
 
-  .toolbar-right {
-    justify-content: flex-end;
-  }
+  appState.margins = { gutter, side, vert, fontSize };
+  document.getElementById('val-gutter').textContent = `${gutter}mm`;
+  document.getElementById('val-total-left').textContent = `${gutter + side}mm`;
+  document.getElementById('val-side-margin').textContent = `${side}mm`;
+  document.getElementById('val-vert-margin').textContent = `${vert}mm`;
+  document.getElementById('val-font-size').textContent = `${fontSize}px`;
+  document.getElementById('margin-summary-label').textContent = `${vert}mm ${side}mm`;
 
-  .toolbar-left .tool-btn {
-    width: 32px;
-    height: 32px;
-    flex: 0 0 32px;
-  }
+  renderLivePreview();
+  saveStateToStorage();
+}
 
-  .preview-edit-toggle {
-    flex: 0 0 36px;
-    width: 36px;
-    min-width: 36px;
-    min-height: 36px;
-    padding: 0;
-  }
+function applyBookletGutter() {
+  const slider = document.getElementById('slider-gutter');
+  slider.value = Number(slider.value) === 15 ? 5 : 15;
+  updateMarginSettings();
+}
 
-  .view-mode-pills {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
+function resetMarginsToDefault() {
+  document.getElementById('slider-gutter').value = 0;
+  document.getElementById('slider-side').value = 0;
+  document.getElementById('slider-vert').value = 0;
+  document.getElementById('slider-font').value = 15;
+  updateMarginSettings();
+}
 
-  .mode-pill {
-    flex: 1 1 0;
-    justify-content: center;
-    gap: 4px;
-    padding: 6px 7px;
-    font-size: 0.74rem;
-    white-space: nowrap;
-  }
+function toggleSlideDrawer(forceState) {
+  const drawer = document.getElementById('slide-drawer');
+  const backdrop = document.getElementById('drawer-backdrop');
+  const studio = document.getElementById('studio-view');
+  const isOpen = typeof forceState === 'boolean' ? forceState : !drawer.classList.contains('open');
+  drawer.classList.toggle('open', isOpen);
+  studio.classList.toggle('drawer-open', isOpen);
+  backdrop.classList.toggle('hidden', !isOpen || window.innerWidth >= 768);
+}
 
-  .file-tabs-bar {
-    padding-inline: 8px 6px;
-  }
+function switchDrawerTab(tabName) {
+  ['files', 'outline', 'margins'].forEach(t => {
+    document.getElementById(`dtab-${t}`).classList.toggle('active', t === tabName);
+    document.getElementById(`dpanel-${t}`).classList.toggle('hidden', t !== tabName);
+  });
+}
 
-  .file-tabs-scroll {
-    min-width: 0;
-  }
+function renderDrawerFilesList(filterQuery = '') {
+  const proj = getActiveProject();
+  const listEl = document.getElementById('drawer-files-list');
+  if (!proj || !listEl) return;
+  const q = filterQuery.toLowerCase().trim();
+  listEl.innerHTML = proj.files
+    .filter(f => f.name.toLowerCase().includes(q))
+    .map(f => `
+      <div class="drawer-file-item ${f.id === appState.activeFileId ? 'active' : ''}" onclick="switchActiveFileTab('${f.id}'); toggleSlideDrawer(false);">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <i data-lucide="file-text" class="icon-sm"></i>
+          <span>${escapeHtml(f.name)}</span>
+        </div>
+        <button class="proj-action-icon" onclick="event.stopPropagation(); closeOrDeleteFileTab('${f.id}')">
+          <i data-lucide="trash-2" class="icon-xs"></i>
+        </button>
+      </div>
+    `).join('');
+  if (window.lucide) lucide.createIcons();
+}
 
-  .slide-drawer {
-    top: 146px;
+function filterDrawerFiles(val) { renderDrawerFilesList(val); }
+
+function pushHistoryState(fileId, content) {
+  if (!historyStack[fileId]) historyStack[fileId] = { past: [], future: [] };
+  const stack = historyStack[fileId];
+  if (stack.past[stack.past.length - 1] !== content) {
+    stack.past.push(content);
+    stack.future = [];
   }
 }
 
-@media (max-width: 360px) {
-  .studio-toolbar {
-    padding-inline: 6px;
-  }
+function commitEditorContent(content) {
+  const file = getActiveFile();
+  if (!file || file.content === content) return;
+  pushHistoryState(file.id, content);
+  file.content = content;
+  document.getElementById('html-code-editor').value = content;
+  updateLineNumbersAndStatus();
+  saveStateToStorage();
+}
 
-  .toolbar-left,
-  .toolbar-right {
-    gap: 2px;
+function editorUndo() {
+  const file = getActiveFile();
+  const stack = file && historyStack[file.id];
+  if (stack && stack.past.length > 1) {
+    stack.future.push(stack.past.pop());
+    file.content = stack.past[stack.past.length - 1];
+    document.getElementById('html-code-editor').value = file.content;
+    updateLineNumbersAndStatus();
+    renderLivePreview();
+    saveStateToStorage();
   }
+}
 
-  .toolbar-left .tool-btn,
-  .preview-edit-toggle {
-    width: 28px;
-    height: 30px;
-    min-width: 28px;
-    min-height: 30px;
-    flex-basis: 28px;
+function editorRedo() {
+  const file = getActiveFile();
+  const stack = file && historyStack[file.id];
+  if (stack && stack.future.length > 0) {
+    const next = stack.future.pop();
+    stack.past.push(next);
+    file.content = next;
+    document.getElementById('html-code-editor').value = file.content;
+    updateLineNumbersAndStatus();
+    renderLivePreview();
+    saveStateToStorage();
   }
+}
 
-  .mode-pill {
-    gap: 3px;
-    padding-inline: 5px;
-    font-size: 0.7rem;
+function saveActiveNote(showFeedback = true) {
+  const proj = getActiveProject();
+  const file = getActiveFile();
+  if (!proj || !file) return;
+  file.content = document.getElementById('html-code-editor').value;
+  proj.updatedAt = formatTodayDate();
+  if (!file.versions) file.versions = [];
+  if (showFeedback) {
+    file.versions.unshift({ timestamp: new Date().toLocaleTimeString(), content: file.content });
   }
+  saveStateToStorage();
+  if (showFeedback) {
+    const btn = document.getElementById('save-note-btn');
+    btn.style.transform = 'scale(1.15)';
+    setTimeout(() => (btn.style.transform = 'scale(1)'), 180);
+  }
+}
+
+function setStudioViewMode(mode) {
+  appState.viewMode = mode;
+  document.getElementById('workspace-body').className = `workspace-body mode-${mode}`;
+  document.getElementById('btn-mode-editor').classList.toggle('active', mode === 'editor');
+  document.getElementById('btn-mode-split').classList.toggle('active', mode === 'split');
+  document.getElementById('btn-mode-preview').classList.toggle('active', mode === 'preview');
+  if (mode !== 'editor') renderLivePreview();
+}
+
+function toggleSearchBar() {
+  const bar = document.getElementById('studio-search-bar');
+  bar.classList.toggle('hidden');
+  if (!bar.classList.contains('hidden')) document.getElementById('studio-search-input').focus();
+}
+
+function performStudioSearch(query) {
+  const countEl = document.getElementById('search-match-count');
+  const file = getActiveFile();
+  if (!file || !query.trim()) { countEl.textContent = '0/0'; return; }
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const matches = (file.content.match(new RegExp(escaped, 'gi')) || []).length;
+  countEl.textContent = matches > 0 ? `1/${matches}` : '0/0';
+}
+
+function enterFullscreenPreview() {
+  setStudioViewMode('preview');
+  document.body.classList.add('fullscreen-preview');
+  document.getElementById('fullscreen-bar').classList.remove('hidden');
+}
+
+function exitFullscreenPreview() {
+  document.body.classList.remove('fullscreen-preview');
+  document.getElementById('fullscreen-bar').classList.add('hidden');
+}
+
+function adjustPreviewZoom(delta) {
+  appState.zoomLevel = Math.min(180, Math.max(60, appState.zoomLevel + delta));
+  document.getElementById('zoom-level-text').textContent = `${appState.zoomLevel}%`;
+  renderLivePreview();
+}
+
+function openStudioOptionsModal() {
+  document.getElementById('studio-options-modal').classList.remove('hidden');
+}
+
+function closeStudioOptionsModal() {
+  document.getElementById('studio-options-modal').classList.add('hidden');
+}
+
+function handleHTMLFileImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    let proj = getActiveProject() || appState.projects[0];
+    appState.activeProjectId = proj.id;
+    const newNote = { id: 'file-' + Date.now(), name: file.name.replace(/\.html?$/i, ''), content: e.target.result, versions: [] };
+    proj.files.push(newNote);
+    appState.activeFileId = newNote.id;
+    saveStateToStorage();
+    document.getElementById('home-view').classList.remove('active');
+    document.getElementById('studio-view').classList.add('active');
+    renderFileTabs();
+    loadActiveFileIntoStudio();
+    renderDrawerFilesList();
+  };
+  reader.readAsText(file);
+}
+
+function downloadCurrentNoteHTML() {
+  closeStudioOptionsModal();
+  const file = getActiveFile();
+  if (!file) return;
+  const blob = new Blob([file.content], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${file.name}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function downloadFullProjectZip() {
+  closeStudioOptionsModal();
+  const proj = getActiveProject();
+  if (proj) await downloadProjectZipById(proj.id);
+}
+
+async function downloadProjectZipById(projId) {
+  const proj = appState.projects.find(p => p.id === projId);
+  if (!proj || !window.JSZip) return;
+  const zip = new JSZip();
+  proj.files.forEach(f => zip.file(`${f.name}.html`, f.content));
+  const blob = await zip.generateAsync({ type: 'blob' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${proj.name.replace(/\s+/g, '_')}_Notes.zip`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function openVersionHistory() {
+  closeStudioOptionsModal();
+  const file = getActiveFile();
+  if (!file || !file.versions || file.versions.length === 0) {
+    alert('No saved snapshots yet. Click the top Save button to create version snapshots.');
+    return;
+  }
+  const list = file.versions.map((v, i) => `${i + 1}. Saved at ${v.timestamp}`).join('\n');
+  const choice = prompt(`Version History for "${file.name}":\n${list}\n\nEnter snapshot number to restore:`, '1');
+  const idx = parseInt(choice, 10) - 1;
+  if (!isNaN(idx) && file.versions[idx]) {
+    file.content = file.versions[idx].content;
+    loadActiveFileIntoStudio();
+    saveStateToStorage();
+  }
+}
+
+function deleteActiveNote() {
+  closeStudioOptionsModal();
+  const file = getActiveFile();
+  if (file) closeOrDeleteFileTab(file.id);
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+const windowHandlers = {
+  createNewProject, toggleDarkMode, openProjectInStudio, renameProjectPrompt,
+  downloadProjectZipById, deleteProjectById, closeStudioToHome, saveActiveNote,
+  openStudioOptionsModal, closeStudioOptionsModal, toggleSlideDrawer, editorUndo,
+  editorRedo, toggleSearchBar, performStudioSearch, setStudioViewMode,
+  switchActiveFileTab, renameActiveFilePrompt, closeOrDeleteFileTab, addNewNoteTab,
+  enterFullscreenPreview, adjustPreviewZoom, exitFullscreenPreview,
+  togglePreviewEditMode, handleSmartImageUpload, setSelectedImageWrap,
+  scaleSelectedImage, moveSelectedImageUpDown, deleteSelectedImage,
+  switchDrawerTab, downloadFullProjectZip, filterDrawerFiles, updateMarginSettings,
+  applyBookletGutter, resetMarginsToDefault, handleHTMLFileImport,
+  downloadCurrentNoteHTML, openVersionHistory, triggerPrintDocument,
+  deleteActiveNote, closePrintToast, executeDirectPrint, downloadPrintReadyHTML,
+  scrollToPreviewHeading
+};
+
+export default function App() {
+  const markup = document.getElementById('app-markup')?.innerHTML || '';
+
+  useEffect(() => {
+    Object.assign(window, windowHandlers);
+    initializeNotesStudio();
+  }, []);
+
+  return <div dangerouslySetInnerHTML={{ __html: markup }} />;
 }
