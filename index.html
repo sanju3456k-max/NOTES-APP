@@ -35,24 +35,41 @@
     </header>
 
     <main id="html-projects-container" class="home-content">
-      <div class="quick-actions-bar">
-        <button class="btn-primary-pill" onclick="createNewProject()">
-          <i data-lucide="folder-plus" class="icon-sm"></i>
-          <span>New project</span>
-        </button>
-        <label for="hidden-html-import" class="btn-outline-pill" style="cursor:pointer;">
-          <i data-lucide="download" class="icon-sm"></i>
-          <span>Import</span>
-        </label>
-        <button class="icon-btn-circle" onclick="toggleDarkMode()" title="Toggle Theme">
+      <section class="home-hero" aria-labelledby="home-hero-title">
+        <div class="home-hero-copy">
+          <span class="home-eyebrow"><i data-lucide="sparkles" class="icon-xs"></i> YOUR LEARNING SPACE</span>
+          <h2 id="home-hero-title">Good ideas start with a blank page.</h2>
+          <p>Create a chapter, collect your notes, and shape them into something worth revisiting.</p>
+          <div class="home-hero-actions">
+            <button class="btn-primary-pill" onclick="createNewProject()">
+              <i data-lucide="plus" class="icon-sm"></i>
+              <span>New project</span>
+            </button>
+            <label for="hidden-html-import" class="btn-outline-pill" style="cursor:pointer;">
+              <i data-lucide="file-up" class="icon-sm"></i>
+              <span>Import notes</span>
+            </label>
+          </div>
+        </div>
+        <div class="home-hero-art" aria-hidden="true">
+          <div class="hero-orbit hero-orbit-one"></div>
+          <div class="hero-orbit hero-orbit-two"></div>
+          <div class="hero-note-card">
+            <i data-lucide="notebook-pen" class="hero-note-icon"></i>
+            <span>Ideas become<br><strong>understanding.</strong></span>
+            <div class="hero-note-lines"><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <button class="icon-btn-circle home-theme-toggle" onclick="toggleDarkMode()" title="Toggle Theme" aria-label="Toggle theme">
           <i data-lucide="moon" class="icon-sm"></i>
         </button>
-      </div>
+      </section>
 
-      <div class="section-header">
+      <div class="section-header home-projects-heading">
         <div>
-          <h2 class="section-title">Your Projects & Chapters</h2>
-          <p class="section-subtitle">Click a project card to open its notes inside the studio.</p>
+          <span class="home-section-kicker">YOUR LIBRARY</span>
+          <h2 class="section-title">Projects & chapters</h2>
+          <p class="section-subtitle">Pick up where you left off, or open a project to explore its notes.</p>
         </div>
         <span id="project-count-label" class="count-badge">3 Projects</span>
       </div>
@@ -104,6 +121,9 @@
       </div>
 
       <div class="toolbar-right">
+        <button id="preview-edit-toggle" class="tool-btn preview-edit-toggle" onclick="togglePreviewEditMode()" aria-pressed="false" aria-label="Edit preview text and add images" title="Edit preview text and add images">
+          <i data-lucide="pencil" class="icon-sm" aria-hidden="true"></i>
+        </button>
         <div class="view-mode-pills">
           <button id="btn-mode-editor" class="mode-pill" onclick="setStudioViewMode('editor')">
             <i data-lucide="code" class="icon-xs"></i>
@@ -193,10 +213,6 @@
       <!-- RIGHT PANE: DIRECT INTERACTIVE PREVIEW CANVAS -->
       <div id="preview-pane" class="workspace-pane preview-pane">
         <div class="preview-edit-toolbar">
-          <button id="preview-edit-toggle" class="tool-btn preview-edit-toggle" onclick="togglePreviewEditMode()" aria-pressed="false" title="Edit preview text and add images">
-            <i data-lucide="pencil" class="icon-sm"></i>
-            <span>Edit preview</span>
-          </button>
           <label id="preview-image-upload-label" for="hidden-image-upload" class="tool-btn tool-btn-accent preview-image-upload hidden" title="Add image to preview">
             <i data-lucide="image-plus" class="icon-sm"></i>
             <span>+ Image</span>
